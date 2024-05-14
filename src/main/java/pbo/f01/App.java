@@ -3,13 +3,12 @@ package pbo.f01;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
-// import java.util.Set;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-// import javax.persistence.Entity;
 import javax.persistence.Persistence;
-// import javax.persistence.TypedQuery; 
+
 
 import pbo.f01.model.Student;
 import pbo.f01.model.Dorm;
@@ -26,13 +25,13 @@ public class App {
         factory = Persistence.createEntityManagerFactory( "dormy_pu");
         entityManager = factory.createEntityManager();
 
-        Scanner scanner = new Scanner (System.in);
+        Scanner scanner = new Scanner (System.in );
         String line = null; 
-        cleanTables();
+        cleanTables(); 
         while (true) {
             line = scanner.nextLine();
 
-            if (line.equals ("---")) {
+            if (line.equals ("---")) { 
                 break;
             }
             String[] inputParts = line.split(pisah);
@@ -40,29 +39,29 @@ public class App {
             inputParts = Arrays.copyOfRange(inputParts,1,inputParts.length);
                 switch (command){
                     case "dorm-add":
-                    System.out.println("seedTables");
+                    System.out.println("dorm-add");
                     entityManager.getTransaction().begin();
                     Dorm tempt = new Dorm(inputParts[0],inputParts[1], inputParts[2]);
                     entityManager.persist(tempt);
                     entityManager.flush();
-                    entityManager.getTransaction().commit();
+                    entityManager.getTransaction().commit(); 
 
 
                     case "student-add":
-                    System.out.println("seedTables");
+                    System.out.println("student-add"); 
                     entityManager.getTransaction().begin();
                     Student tempt1 =  new Student(inputParts[0],inputParts[1],inputParts[2],inputParts[3]);
                     entityManager.persist(tempt1);
                     entityManager.flush();
-                    entityManager.getTransaction().commit();
-                    case "asign":
+                    entityManager.getTransaction().commit(); 
+                    case "assign":
 
                     case  "display-all":
                     displayAllStudents();
                     displayAllDorms();
                     }
         }
-        entityManager.close();
+        entityManager.close(); 
     }
     private static void displayAllStudents(){
      String jpql ="PILIH c DARI  Student c diambil dari c.name";
@@ -90,7 +89,7 @@ public class App {
         entityManager.flush();
         entityManager.getTransaction().commit();
         
-        System.out.println("cleanTables"+ deleteStudents +"Students");
+        System.out.println("cleanTables"+ deleteStudents +"Students"); 
         System.out.println("cleanTables"+ deleteDorms +"Dorms");
        }
 }

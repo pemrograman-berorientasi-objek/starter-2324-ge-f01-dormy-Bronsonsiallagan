@@ -47,15 +47,7 @@ public class Dorm {
     public String getgender(){
         return gender;
     }
-    public void setname(){
-        this.name = name;
-    }
-    public void setcapacity(){
-        this.capacity = capacity;
-    }
-    public void setgender(){
-        this.gender = gender;
-    }
+   
     public Set<Student> getStudents(){
         return students;
     }

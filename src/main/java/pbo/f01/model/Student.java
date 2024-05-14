@@ -62,18 +62,7 @@ public class Student {
     public String getgender(){
     return gender;
     }
-    public void setnim(){
-    this.nim = nim;
-    }
-    public void setname(){
-    this.name = name;
-    }
-    public void setyear(){
-    this.year = year;
-    }
-    public void setgender(){
-    this.gender = gender;
-    }
+    
     public Set<Dorm> getdDorms(){
         return dorms;
     }
