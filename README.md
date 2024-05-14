@@ -9,7 +9,7 @@ Di Institut Teknologi Del, mahasiswa hidup bersama dalam lingkungan asrama. Seti
 Berikut adalah ketentuan-ketentuan yang diterapkan:
 1. Penempatan mahasiswa memperhatikan jenis kelamin. Mahasiswa pria (```male```) hanya dapat ditempatkan pada asrama pria. Prinsip yang sama diberlakukan juga kepada mahasiswa wanita (```female```).
 2. Penempatan mahasiswa ke dalam asrama tidak boleh melebihi kapasitas. Dengan demikian, kenyamanan penghuni asrama dapat dijaga.
-3. Seorang mahasiswa (```student```) dapat diidentifikasi dengan atribut: nomor induk mahasiswa (```id```), nama (```name```), tahun masuk (```entrance year```), dan jenis kelamin (```gender```). Keunikan seorang mahasiswa dijamin melalui nomor induk mahasiswa (```id```).
+3. Seorang mahasiswa (```student```) dapat diidentifikasi dengan atribut: nomor induk mahasiswa (```id```), nama (```name```), tahun masuk (```entrance year```), dan jenis kelamin (```gender```). Keunikan seorang mahasiswa dijamin melalui nomor induk mahasiswa (```id```).d
 4. Sebuah asrama (```dorm```) dapat diidentifikasi dengan atribut: nama (```name```), kapasitas (```capacity```), dan jenis kelamin penghuni (```gender```). Keunikan sebuah asrama dijamin melalui nama (```name```).
 
 
