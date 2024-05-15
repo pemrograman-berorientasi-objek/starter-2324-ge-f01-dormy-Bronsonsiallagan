@@ -45,25 +45,39 @@ public class App {
                     break;
 
                 case "student-add":
+                //cek student sudah ada atau belum
+                    Student student1 = entityManager.find(Student.class, inputParts[0]);
+                    if (student1 != null) {
+                        System.out.println("Student already exists");
+                        break;
+                    }
+
+
                     entityManager.getTransaction().begin();
                     Student student = new Student(inputParts[0], inputParts[1], inputParts[2], inputParts[3]);
+                    
                     entityManager.persist(student);
                     entityManager.flush();
                     entityManager.getTransaction().commit();
                     break;
 
-                case "assign":
-                    // Your implementation for assigning a student to a dorm goes here
-                    entityManager.getTransaction().begin();
-                    Student student1 = entityManager.find(Student.class, inputParts[0]);
-                    Dorm dorm1 = entityManager.find(Dorm.class, inputParts[1]);
-                    student1.getDorms().add(dorm1);
-                    dorm1.getStudents().add(student1);
-                    // update size of dorm
-                    dorm1.setSize(dorm1.getStudents().size());
-                    entityManager.getTransaction().commit();
+                    case "assign":
+                        entityManager.getTransaction().begin();
+                        Student student2 = entityManager.find(Student.class, inputParts[0]);
+                        Dorm dorm1 = entityManager.find(Dorm.class, inputParts[1]);
+                    
+                        // Check if the dorm and student have compatible genders
+                        if (student2 != null && dorm1 != null && student2.getgender().equals(dorm1.getgender()) && dorm1.getSize() < Integer.parseInt(dorm1.getcapacity())){
 
+                            // Add student to dorm and dorm to student only if genders are compatible
+                            student2.getDorms().add(dorm1);
+                            dorm1.getStudents().add(student2);
+                            // Update size of dorm
+                            dorm1.setSize(dorm1.getStudents().size());
+                        } 
+                        entityManager.getTransaction().commit(); 
                     break;
+                
 
                 case "display-all":
                     displayAll();
