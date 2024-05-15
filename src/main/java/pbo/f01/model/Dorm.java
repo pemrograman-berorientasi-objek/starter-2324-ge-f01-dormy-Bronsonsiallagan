@@ -11,7 +11,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dorms") 
-  
+
+/**
+ * @author 12S22025 Bronson TM Siallagan 
+ * @author 12S22026 Ruben Sianipar 
+ */
+
+   
 public class Dorm { 
     @Id
     @Column(name = "name",nullable = false,length = 255)
@@ -39,7 +45,6 @@ public class Dorm {
         this.size = 0;
 
     }
-
     public Dorm(String name, String capacity, String gender, Set<Student>students) {
         this.name = name;
         this.capacity = capacity;
@@ -66,20 +71,16 @@ public class Dorm {
 
     public int getSize() {
         return size;
-    }
+    } 
 
     public void setSize(int size) {
         this.size = size;
     }
 
-    
-
-
     @Override 
     public String toString(){
         return name + "|" + gender + "|" +  capacity + "|" + size ; 
     }
-
 
 
 }

@@ -14,8 +14,13 @@ import javax.persistence.Persistence;
 import pbo.f01.model.Student; 
 import pbo.f01.model.Dorm; 
 
+/**
+ * @author 12S22025 Bronson TM Siallagan 
+ * @author 12S22026 Ruben Sianipar 
+ */
+
 public class App { 
-    private static EntityManagerFactory factory;
+    private static EntityManagerFactory factory; 
     private static EntityManager entityManager;
     static final String DELIMITER = "#";
 
@@ -58,7 +63,7 @@ public class App {
                     entityManager.persist(student);
                     entityManager.flush();
                     entityManager.getTransaction().commit();
-                    break;
+                    break; 
 
                     case "assign":
                         entityManager.getTransaction().begin();
@@ -103,7 +108,7 @@ public class App {
 
     private static void cleanTables() {
         String deleteStudentJpql = "DELETE FROM Student";
-        String deleteDormJpql = "DELETE FROM Dorm";
+        String deleteDormJpql = "DELETE FROM Dorm"; 
 
         entityManager.getTransaction().begin();
         entityManager.createQuery(deleteStudentJpql).executeUpdate();

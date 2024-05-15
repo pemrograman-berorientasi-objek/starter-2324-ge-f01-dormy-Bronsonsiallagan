@@ -11,6 +11,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
+
+/**
+ * @author 12S22025 Bronson TM Siallagan 
+ * @author 12S22026 Ruben Sianipar 
+ */
+
+ 
+
 @Entity
 @Table (name = "students")
 public class Student {
