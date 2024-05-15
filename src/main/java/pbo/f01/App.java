@@ -3,93 +3,102 @@ package pbo.f01;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import pbo.f01.model.Student; 
+import pbo.f01.model.Dorm; 
 
-import pbo.f01.model.Student;
-import pbo.f01.model.Dorm;
-
-/**
- * 12S22025 - Bronson Siallagan
- * 12S22026 - Ruben Sianipar
- */
-public class App {
+public class App { 
     private static EntityManagerFactory factory;
     private static EntityManager entityManager;
-    static final String pisah = "#";
-    public static void main(String[] _args) {
-        factory = Persistence.createEntityManagerFactory( "dormy_pu");
+    static final String DELIMITER = "#";
+
+    public static void main(String[] args) {
+        factory = Persistence.createEntityManagerFactory("dormy_pu");
         entityManager = factory.createEntityManager();
 
-        Scanner scanner = new Scanner (System.in );
-        String line = null; 
-        cleanTables(); 
+        Scanner scanner = new Scanner(System.in);
+        String line;
+        cleanTables();
         while (true) {
             line = scanner.nextLine();
 
-            if (line.equals ("---")) { 
+            if (line.equals("---")) {
                 break;
             }
-            String[] inputParts = line.split(pisah);
+            String[] inputParts = line.split(DELIMITER);
             String command = inputParts[0];
-            inputParts = Arrays.copyOfRange(inputParts,1,inputParts.length);
-                switch (command){
-                    case "dorm-add":
-                    System.out.println("dorm-add");
+            inputParts = Arrays.copyOfRange(inputParts, 1, inputParts.length);
+            switch (command) {
+                case "dorm-add":
                     entityManager.getTransaction().begin();
-                    Dorm tempt = new Dorm(inputParts[0],inputParts[1], inputParts[2]);
-                    entityManager.persist(tempt);
+                    Dorm dorm = new Dorm(inputParts[0], inputParts[1], inputParts[2]);
+                    entityManager.persist(dorm);
                     entityManager.flush();
-                    entityManager.getTransaction().commit(); 
+                    entityManager.getTransaction().commit();
+                    break;
 
-
-                    case "student-add":
-                    System.out.println("student-add"); 
+                case "student-add":
                     entityManager.getTransaction().begin();
-                    Student tempt1 =  new Student(inputParts[0],inputParts[1],inputParts[2],inputParts[3]);
-                    entityManager.persist(tempt1);
+                    Student student = new Student(inputParts[0], inputParts[1], inputParts[2], inputParts[3]);
+                    entityManager.persist(student);
                     entityManager.flush();
-                    entityManager.getTransaction().commit(); 
-                    case "assign":
+                    entityManager.getTransaction().commit();
+                    break;
 
-                    case  "display-all":
-                    displayAllStudents();
-                    displayAllDorms();
-                    }
+                case "assign":
+                    // Your implementation for assigning a student to a dorm goes here
+                    entityManager.getTransaction().begin();
+                    Student student1 = entityManager.find(Student.class, inputParts[0]);
+                    Dorm dorm1 = entityManager.find(Dorm.class, inputParts[1]);
+                    student1.getDorms().add(dorm1);
+                    dorm1.getStudents().add(student1);
+                    // update size of dorm
+                    dorm1.setSize(dorm1.getStudents().size());
+                    entityManager.getTransaction().commit();
+
+                    break;
+
+                case "display-all":
+                    displayAll();
+                    break;
+            }
         }
-        entityManager.close(); 
+        scanner.close();
+        entityManager.close();
     }
-    private static void displayAllStudents(){
-     String jpql ="PILIH c DARI  Student c diambil dari c.name";
-     List<Student>students = entityManager.createQuery(jpql,Student.class).getResultList();
-     System.out.println("displayAllStudents");
-     for(Student c:students){
-        System.out.println(c);
-     }
-    }
-    private static void displayAllDorms(){
-        String jpql ="PILIH c DARI  Dorm c diambil dari c.name";
-        List<Dorm>dorms = entityManager.createQuery(jpql,Dorm.class).getResultList();
-        System.out.println("displayAllDorms");
-        for(Dorm c:dorms){
-           System.out.println(c);
+
+    private static void displayAll() {
+        List<Dorm> dorms = entityManager.createQuery("SELECT d FROM Dorm d", Dorm.class).getResultList();
+        dorms.sort(Comparator.comparing(Dorm::getname)); // Sorting dorms by name
+
+        for (Dorm dorm : dorms) {
+            System.out.println(dorm);
+            List<Student> students = new ArrayList<>(dorm.getStudents());
+            students.sort(Comparator.comparing(Student::getname)); // Sorting students by name
+            for (Student student : students) {
+                System.out.println(student);
+            }
         }
-       }
-       private static void cleanTables(){
-        String deleteStudentJpql = "Delete From Student c";
-        String deleteDormJpql ="Delete From Dorm c";
+    }
+
+    private static void cleanTables() {
+        String deleteStudentJpql = "DELETE FROM Student";
+        String deleteDormJpql = "DELETE FROM Dorm";
 
         entityManager.getTransaction().begin();
-        int deleteStudents = entityManager.createQuery(deleteStudentJpql).executeUpdate();
-        int deleteDorms = entityManager.createQuery(deleteDormJpql).executeUpdate();
-        entityManager.flush();
+        entityManager.createQuery(deleteStudentJpql).executeUpdate();
+        entityManager.createQuery(deleteDormJpql).executeUpdate();
+        // entityManager.flush();
         entityManager.getTransaction().commit();
+
+
         
-        System.out.println("cleanTables"+ deleteStudents +"Students"); 
-        System.out.println("cleanTables"+ deleteDorms +"Dorms");
-       }
+    }
 }

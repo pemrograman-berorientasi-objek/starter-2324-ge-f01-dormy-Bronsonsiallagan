@@ -10,17 +10,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+
 @Entity
-@Table (name ="Student")
+@Table (name = "students")
 public class Student {
    @Id
-   @Column(name = "nim",nullable = false,length = 255)
+   @Column(name = "nim", nullable = false, length = 255)
     private  String  nim;
-   @Column(name = "name",nullable = false,length = 255 )
+   @Column(name = "name", nullable = false, length = 255)
    private String name;
-   @Column(name = "year",nullable = false,length =255)
-   private String year;
-   @Column(name = "gender",nullable = false,length = 255)
+   @Column(name = "yearAcademic", nullable = false, length = 255)
+   private String yearAcademic;
+   @Column(name = "gender", nullable = false, length = 255)
    private String gender;
 
 
@@ -35,17 +36,18 @@ public class Student {
     public Student(){
 
     }
-    public Student(String nim,String name,String year,String gender){
+
+    public Student(String nim,String name,String yearAcademic,String gender){
         this.nim = nim;
         this.name = name;
-        this.year = year;
+        this.yearAcademic = yearAcademic;
         this.gender = gender; 
 
     }
-    public Student(String nim,String name,String year,String gender,Set<Dorm>dorms){
+    public Student(String nim,String name,String yearAcademic,String gender,Set<Dorm>dorms){
         this.nim = nim;
         this.name = name;
-        this.year = year;
+        this.yearAcademic = yearAcademic;
         this.gender = gender; 
         this.dorms = dorms;
 
@@ -56,22 +58,22 @@ public class Student {
     public String getname(){
     return name;
     }
-    public String getyear(){
-    return year;
+    public String getyearAcademic(){
+    return yearAcademic;
     }
     public String getgender(){
     return gender;
     }
     
-    public Set<Dorm> getdDorms(){
+    public Set<Dorm> getDorms(){
         return dorms;
     }
     public void setDorms(Set<Dorm>dorms){
         this.dorms = dorms;
-    }
+    } 
     @Override
     public String toString(){
-        return nim + "|" + name + "|" + year+ "|" + gender;
+        return nim + "|" + name + "|" + yearAcademic;
     }
     
 }
