@@ -48,7 +48,6 @@ public class App {
                 //cek student sudah ada atau belum
                     Student student1 = entityManager.find(Student.class, inputParts[0]);
                     if (student1 != null) {
-                        System.out.println("Student already exists");
                         break;
                     }
 
